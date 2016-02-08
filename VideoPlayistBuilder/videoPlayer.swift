@@ -65,7 +65,7 @@ class videoPlayer: AVPlayerViewController{
     }
     
     private func playVideo(){
-        let currentDic:OrderedDictionary<String,String> = getCurrentFolder()
+        let currentDic:OrderedDictionary = getCurrentFolder()
         let finalpath:NSURL = NSURL(string:currentDic[currentPathName]!)!
         player = AVPlayer(URL: finalpath)
         player?.play()
@@ -81,8 +81,13 @@ class videoPlayer: AVPlayerViewController{
         videoObserver = notificationCenter.addObserverForName(AVPlayerItemDidPlayToEndTimeNotification, object: nil, queue: mainQueue) { _ in
             
             if( self.currentState == videoPlayerState.Mutiple_Rotate){
-                let currentDic:OrderedDictionary<String,String> = self.getCurrentFolder()
-                let currentIndex:NSInteger = currentDic.indexOfKey(self.currentPathName)
+                let currentDic:OrderedDictionary = self.getCurrentFolder()
+                
+                var currentIndex:NSInteger = 0
+                if(currentDic.array.contains(self.currentPathName)){
+                    currentIndex = currentDic.indexOfKey(self.currentPathName)
+                }
+            
                 var newIndex:NSInteger = currentIndex + 1
                 if( newIndex >= currentDic.count){
                     newIndex = 0
@@ -92,7 +97,7 @@ class videoPlayer: AVPlayerViewController{
             }else if(self.currentState == videoPlayerState.Singer_Rotate){
                 self.playVideo()
             }else if(self.currentState == videoPlayerState.Random_Rotate){
-                let currentDic:OrderedDictionary<String,String> = self.getCurrentFolder()
+                let currentDic:OrderedDictionary = self.getCurrentFolder()
                 let newIndex:NSInteger =  NSInteger(arc4random_uniform(UInt32(currentDic.count)))
                 self.currentPathName = currentDic[newIndex].0
                 self.playVideo()
@@ -101,7 +106,7 @@ class videoPlayer: AVPlayerViewController{
         }
     }
     
-    private func getCurrentFolder() -> OrderedDictionary<String,String>{
+    private func getCurrentFolder() -> OrderedDictionary{
         switch(currentPlayMode){
         case currentAmblum.All:
             return Helper.sharedInstance.allAmblum
@@ -110,7 +115,7 @@ class videoPlayer: AVPlayerViewController{
         case currentAmblum.Playist:
             return Helper.sharedInstance.playistAmblum[currentDirectoryName]!
         default:
-            return OrderedDictionary<String,String>()
+            return OrderedDictionary()
         }
     }
     

@@ -10,10 +10,11 @@ import UIKit
 
 class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var playistTableView: UITableView!
     let alert:UIAlertController = UIAlertController.init(title: "New Playist", message: "Add a New Playist", preferredStyle: UIAlertControllerStyle.Alert)
     
-    var playistAmblum:[String:OrderedDictionary<String,String>] = Helper.sharedInstance.playistAmblum
+    var playistAmblum:[String:OrderedDictionary] = Helper.sharedInstance.playistAmblum
     var sectionTitle:String = ""
     var videoImaDic:[String:UIImage] = [String:UIImage]()
 
@@ -60,8 +61,10 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(sectionTitle == ""){
+            backButton.hidden = true
             return playistAmblum.count
         }else{
+            backButton.hidden = false
             return (playistAmblum[sectionTitle]?.count)!
         }
     }
@@ -73,7 +76,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if(sectionTitle == ""){
             name = Array(playistAmblum.keys)[indexPath.row]
         }else{
-            name = playistAmblum[sectionTitle]?.array[indexPath.row]
+            name = playistAmblum[sectionTitle]![indexPath.row].0
         }
         cell.textLabel?.text = name
         if((videoImaDic[name]) != nil){
@@ -89,9 +92,20 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
             sectionTitle = Array(playistAmblum.keys)[indexPath.row]
             playistTableView.reloadData()
         }else{
-            let name:String = (playistAmblum[sectionTitle]?.array[indexPath.row])!
+            let name:String = (playistAmblum[sectionTitle]![indexPath.row].0)
             videoPlayer.sharedInstance.setVideoData(currentAmblum.Playist, currentPath: name, currentDirectory: sectionTitle)
-            sectionTitle = ""
+        }
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if(editingStyle == UITableViewCellEditingStyle.Delete){
+            if( sectionTitle == ""){
+                 Helper.sharedInstance.removeFolder("Playist", folderName: Array(playistAmblum.keys)[indexPath.row])
+            }else{
+                Helper.sharedInstance.removeVideo("Playist", folderName: sectionTitle, fileName: (playistAmblum[sectionTitle]![indexPath.row].0))
+            }
+            self.playistAmblum = Helper.sharedInstance.playistAmblum
+            playistTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
         }
     }
  

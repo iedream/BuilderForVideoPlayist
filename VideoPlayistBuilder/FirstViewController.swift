@@ -133,7 +133,13 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
             
             let folderName:String = titleArray[indexPath.row]
             Helper.sharedInstance.addVideo(currentVideoFile[0], folderName: folderName, videoFile: currentVideoFile[2], fileName: currentVideoFile[1])
-            (self.tabBarController?.viewControllers![1] as! SecondViewController).getData()
+            
+            if(currentVideoFile[0] == "Playist"){
+                 (self.tabBarController?.viewControllers![1] as! SecondViewController).getData()
+            }else{
+                 (self.tabBarController?.viewControllers![2] as! ThirdViewController).getData()
+            }
+            (self.tabBarController?.viewControllers![3] as! FourthViewController).getData()
             
             achoiceTableView.hidden = true
 

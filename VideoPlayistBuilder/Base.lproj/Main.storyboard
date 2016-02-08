@@ -104,6 +104,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Playist" image="second" id="cPa-gy-q4n"/>
                     <connections>
+                        <outlet property="backButton" destination="aan-q8-1Fy" id="fYA-gE-RFJ"/>
                         <outlet property="playistTableView" destination="Rob-Hl-h6C" id="Vkg-qF-bed"/>
                     </connections>
                 </viewController>
@@ -122,9 +123,54 @@
                     <view key="view" contentMode="scaleToFill" id="1tI-V0-FDO">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6oM-sp-LWk">
+                                <rect key="frame" x="0.0" y="66" width="600" height="485"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="singerTableCell" id="qk8-An-Lxn" customClass="viewControllerCell" customModule="VideoPlayistBuilder" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qk8-An-Lxn" id="QGq-IA-pez">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUj-e2-6qG">
+                                <rect key="frame" x="20" y="20" width="46" height="30"/>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="addToSinger:" destination="ERf-K3-0X5" eventType="touchUpInside" id="un1-ZX-eBf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Khl-eO-AdF">
+                                <rect key="frame" x="94" y="20" width="46" height="30"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="back:" destination="ERf-K3-0X5" eventType="touchUpInside" id="FDz-Ap-ZB3"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Khl-eO-AdF" firstAttribute="leading" secondItem="SUj-e2-6qG" secondAttribute="trailing" constant="20" id="8Ob-8a-bJi"/>
+                            <constraint firstItem="6oM-sp-LWk" firstAttribute="top" secondItem="SUj-e2-6qG" secondAttribute="bottom" constant="-1" id="A3c-84-Pba"/>
+                            <constraint firstItem="SUj-e2-6qG" firstAttribute="top" secondItem="g3l-2M-7kf" secondAttribute="bottom" constant="20" id="ITw-UI-6dH"/>
+                            <constraint firstAttribute="trailing" secondItem="6oM-sp-LWk" secondAttribute="trailing" id="MqW-gV-Rcx"/>
+                            <constraint firstItem="hhA-Na-mSO" firstAttribute="top" secondItem="6oM-sp-LWk" secondAttribute="bottom" id="Yhk-ab-AEJ"/>
+                            <constraint firstItem="6oM-sp-LWk" firstAttribute="leading" secondItem="1tI-V0-FDO" secondAttribute="leading" id="mwh-L7-Sgl"/>
+                            <constraint firstItem="Khl-eO-AdF" firstAttribute="bottom" secondItem="SUj-e2-6qG" secondAttribute="bottom" id="pHm-Uf-0fW"/>
+                            <constraint firstItem="Khl-eO-AdF" firstAttribute="top" secondItem="SUj-e2-6qG" secondAttribute="top" id="vtp-MY-RFA"/>
+                            <constraint firstItem="SUj-e2-6qG" firstAttribute="leading" secondItem="1tI-V0-FDO" secondAttribute="leading" constant="20" id="y9V-xk-IEj"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Singer" image="second" selectedImage="third" id="8Dd-Af-PoW"/>
+                    <tabBarItem key="tabBarItem" title="Singer" image="second" selectedImage="second" id="8Dd-Af-PoW"/>
+                    <connections>
+                        <outlet property="backButton" destination="Khl-eO-AdF" id="Gxm-OF-2lA"/>
+                        <outlet property="singerTableView" destination="6oM-sp-LWk" id="JwL-gd-5pd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="toD-ny-BcL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -133,7 +179,7 @@
         <!--All-->
         <scene sceneID="tPJ-zw-krX">
             <objects>
-                <viewController id="cRU-S7-l1C" sceneMemberID="viewController">
+                <viewController id="cRU-S7-l1C" customClass="FourthViewController" customModule="VideoPlayistBuilder" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0Hg-We-2Zf"/>
                         <viewControllerLayoutGuide type="bottom" id="Z7p-Z6-8Hg"/>
@@ -141,9 +187,34 @@
                     <view key="view" contentMode="scaleToFill" id="X91-Br-Juy">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cfq-fK-4vh">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="allTableCell" id="eHE-tG-gkt" customClass="viewControllerCell" customModule="VideoPlayistBuilder" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eHE-tG-gkt" id="L02-oT-CeV">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Cfq-fK-4vh" secondAttribute="trailing" id="Zrn-kE-6MU"/>
+                            <constraint firstItem="Cfq-fK-4vh" firstAttribute="leading" secondItem="X91-Br-Juy" secondAttribute="leading" id="dwF-tc-djY"/>
+                            <constraint firstItem="Cfq-fK-4vh" firstAttribute="bottom" secondItem="Z7p-Z6-8Hg" secondAttribute="top" id="qRJ-T8-c2j"/>
+                            <constraint firstItem="Cfq-fK-4vh" firstAttribute="top" secondItem="X91-Br-Juy" secondAttribute="top" id="xx1-Pa-KXh"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="All" image="first" id="b1t-dQ-bnT"/>
+                    <connections>
+                        <outlet property="allTableView" destination="Cfq-fK-4vh" id="UOl-IK-4iX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MCi-gC-a7q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -170,27 +241,9 @@
             </objects>
             <point key="canvasLocation" x="0.0" y="0.0"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="ghz-4U-Ju5">
-            <objects>
-                <viewController id="mdH-CA-m5b" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="8tZ-xC-exm"/>
-                        <viewControllerLayoutGuide type="bottom" id="ekf-Pw-g9W"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="tsV-sR-Kau">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HIP-84-193" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
     </scenes>
     <resources>
         <image name="first" width="30" height="30"/>
         <image name="second" width="30" height="30"/>
-        <image name="third" width="60" height="60"/>
     </resources>
 </document>

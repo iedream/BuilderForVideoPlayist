@@ -6,8 +6,8 @@
 //  Copyright © 2016 Catherine. All rights reserved.
 //
 
-struct OrderedDictionary<KeyType: Hashable, ValueType> {
-    
+struct OrderedDictionary{
+    typealias Element = [String:String]
     typealias ArrayType = [String]
     typealias DictionaryType = [String: String]
     
@@ -37,9 +37,17 @@ struct OrderedDictionary<KeyType: Hashable, ValueType> {
         return self.array.indexOf(key)!
     }
     
+    func interate() -> [String:String]{
+        return self.dictionary
+    }
+    
+    func containsKey(key:String) -> Bool{
+        return self.containsKey(key)
+    }
+    
     subscript(index: Int) -> (String, String){
         get{
-            precondition(index < self.array.count, "Index out-of-bounds")
+            precondition(index < self.array.count || index >= self.array.count, "Index out-of-bounds")
             
             let key = self.array[index]
             let value = self.dictionary[key]
@@ -52,10 +60,15 @@ struct OrderedDictionary<KeyType: Hashable, ValueType> {
         return returnArray
     }
     
-    mutating func build(initialArray:NSArray){
-        self.array = initialArray[0] as! ArrayType
-        self.dictionary = initialArray[1] as! DictionaryType
+    
+    mutating func removeKey(key:String) -> (String,String){
+        let index = self.indexOfKey(key)
+        precondition(index < self.array.count || index >= self.array.count, "Index out-of-bouds")
+        let key = self.array.removeAtIndex(index)
+        let value = self.dictionary.removeValueForKey(key)!
+        return (key,value)
     }
+    
 }
 
 import Foundation
@@ -71,9 +84,9 @@ class Helper{
     let typePredicate = MPMediaPropertyPredicate(value: MPMediaType.AnyVideo.rawValue, forProperty: MPMediaItemPropertyMediaType)
     
     // Local Source Data
-    var playistAmblum:[String:OrderedDictionary<String,String>] = [String:OrderedDictionary<String,String>]()
-    var singerAmblum:[String:OrderedDictionary<String,String>] = [String:OrderedDictionary<String,String>]()
-    var allAmblum:OrderedDictionary<String,String> = OrderedDictionary<String,String>()
+    var playistAmblum:[String:OrderedDictionary] = [String:OrderedDictionary]()
+    var singerAmblum:[String:OrderedDictionary] = [String:OrderedDictionary]()
+    var allAmblum:OrderedDictionary = OrderedDictionary()
     var localAmblum:[String:String] = [String:String]()
     var localImageDic:[String:UIImage] = [String:UIImage]()
     
@@ -95,18 +108,18 @@ class Helper{
         var imageDic:[String:UIImage] = [String:UIImage]()
         if (type == "Playist"){
             for(_,subDic) in playistAmblum{
-                for(name,_) in subDic.dictionary{
+                for(name,_) in subDic.interate(){
                     imageDic[name] = localImageDic[name]
                 }
             }
         }else if( type == "Singer"){
             for(_,subDic) in singerAmblum{
-                for(name,_) in subDic.dictionary{
+                for(name,_) in subDic.interate(){
                     imageDic[name] = localImageDic[name]
                 }
             }
         }else if( type == "All"){
-            for(name,_) in allAmblum.dictionary{
+            for(name,_) in allAmblum.interate(){
                 imageDic[name] = localImageDic[name]
             }
         }
@@ -154,13 +167,71 @@ class Helper{
     // Add New Folder To Local Source
     func writeToFolder(choice:String, key:String){
         if(choice == "Singer"){
-            singerAmblum[key] = OrderedDictionary<String,String>()
+            singerAmblum[key] = OrderedDictionary()
             writeToModifyPlist()
         }else if(choice == "Playist"){
-            playistAmblum[key] = OrderedDictionary<String,String>()
+            playistAmblum[key] = OrderedDictionary()
             writeToModifyPlist()
         }
     }
+    
+    func removeVideo(choice:String, folderName:String, fileName:String){
+        if(choice == "Singer"){
+            singerAmblum[folderName]?.removeKey(fileName)
+        }else if(choice == "Playist"){
+            playistAmblum[folderName]?.removeKey(fileName)
+        }else if(choice == "All"){
+            allAmblum.removeKey(fileName)
+            removeVideoForAllList(fileName)
+        }
+        allAmblum.removeKey(fileName)
+        writeToModifyPlist()
+    }
+    
+    func removeFolder(choice:String, folderName:String){
+        removeVideoFromAllAmblum(choice, folderName: folderName)
+        if(choice == "Singer"){
+            singerAmblum.removeValueForKey(folderName)
+        }else if(choice == "Playist"){
+            playistAmblum.removeValueForKey(folderName)
+        }
+        writeToModifyPlist()
+    }
+    
+    func removeVideoForAllList(fileName:String){
+        var sectionTitle:[String]!
+        for (sectionName,subDic) in singerAmblum{
+            if(subDic.containsKey(fileName)){
+                sectionTitle.append(sectionName)
+            }
+        }
+        for name in sectionTitle{
+            singerAmblum[name]?.removeKey(fileName)
+        }
+        
+        sectionTitle.removeAll()
+        for (sectionName,subDic) in playistAmblum{
+            if(subDic.containsKey(fileName)){
+                sectionTitle.append(sectionName)
+            }
+        }
+        for name in sectionTitle{
+            playistAmblum[name]?.removeKey(fileName)
+        }
+    }
+    
+    func removeVideoFromAllAmblum(choice:String,folderName:String){
+        if(choice == "Singer"){
+            for (key,_) in (singerAmblum[folderName]?.interate())!{
+                allAmblum.removeKey(key)
+            }
+        }else if(choice == "Playist"){
+            for (key,_) in (playistAmblum[folderName]?.interate())!{
+                allAmblum.removeKey(key)
+            }
+        }
+    }
+    
     
     // MARK: - Plist Access -
     
@@ -190,7 +261,7 @@ class Helper{
     
     func convertFromBasicType(dictToConvert:NSDictionary,type:String){
         for(key,subDic) in dictToConvert{
-            var orderDic:OrderedDictionary<String,String> = OrderedDictionary<String,String>()
+            var orderDic:OrderedDictionary = OrderedDictionary()
             
             if(subDic.count == 2){
                 orderDic.array = (subDic as! NSArray)[0] as! [String]
@@ -216,7 +287,7 @@ class Helper{
 
     }
     
-    func convertToBasicType(dictToConvert:[String:OrderedDictionary<String,String>]) -> NSDictionary{
+    func convertToBasicType(dictToConvert:[String:OrderedDictionary]) -> NSDictionary{
         let newDict:NSMutableDictionary = NSMutableDictionary.init(dictionary: [:])
         for(key,subDic) in dictToConvert{
             newDict[key] = subDic.writeToPlist()
