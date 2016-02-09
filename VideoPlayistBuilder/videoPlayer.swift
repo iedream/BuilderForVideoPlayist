@@ -50,7 +50,7 @@ class videoPlayer: AVPlayerViewController{
     private var currentState:videoPlayerState = videoPlayerState.NotInit
     private var currentPlayMode:currentAmblum = currentAmblum.NotInit
     
-    override func viewDidLoad() {
+    override func viewDidLoad() {  
     }
     
     func setVideoData(currentPlay:currentAmblum,currentPath:String,currentDirectory:String){
