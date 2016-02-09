@@ -22,6 +22,7 @@
 		4FCC92FC1C65830700FB61FB /* AIMultiDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC92FB1C65830700FB61FB /* AIMultiDelegate.m */; };
 		4FE3BECD1C66D528004E37A2 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE3BECC1C66D528004E37A2 /* Helper.swift */; };
 		4FE3BECF1C671E64004E37A2 /* localList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FE3BECE1C671E64004E37A2 /* localList.plist */; };
+		4FF527701C698E170011A1F2 /* playerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5276F1C698E170011A1F2 /* playerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		4FCC92FB1C65830700FB61FB /* AIMultiDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AIMultiDelegate.m; sourceTree = "<group>"; };
 		4FE3BECC1C66D528004E37A2 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		4FE3BECE1C671E64004E37A2 /* localList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = localList.plist; sourceTree = "<group>"; };
+		4FF5276F1C698E170011A1F2 /* playerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = playerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				4FC941131C619E3500AFB317 /* AppDelegate.swift */,
 				4FC941151C619E3500AFB317 /* FirstViewController.swift */,
 				4FC941471C61B07D00AFB317 /* videoPlayer.swift */,
+				4FF5276F1C698E170011A1F2 /* playerViewController.swift */,
 				4FC941171C619E3500AFB317 /* SecondViewController.swift */,
 				4FE3BECC1C66D528004E37A2 /* Helper.swift */,
 				4FC941431C619E9F00AFB317 /* ThirdViewController.swift */,
@@ -290,6 +293,7 @@
 				4FC941181C619E3500AFB317 /* SecondViewController.swift in Sources */,
 				4FC941141C619E3500AFB317 /* AppDelegate.swift in Sources */,
 				4FC941441C619E9F00AFB317 /* ThirdViewController.swift in Sources */,
+				4FF527701C698E170011A1F2 /* playerViewController.swift in Sources */,
 				4FE3BECD1C66D528004E37A2 /* Helper.swift in Sources */,
 				4FC941161C619E3500AFB317 /* FirstViewController.swift in Sources */,
 				4FC941461C61A3AD00AFB317 /* FourthViewController.swift in Sources */,

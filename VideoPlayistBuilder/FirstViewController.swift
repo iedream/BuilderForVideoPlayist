@@ -14,7 +14,6 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
     let achoiceTableView:UITableView = UITableView.init()
     @IBOutlet weak var mainTableView: UITableView!
     
-    let playerviewController:UIViewController = UIViewController()
     var videoImageDic:[String:UIImage] = [String:UIImage]()
     var localVideoDic:[String:String] = [String:String]()
     var titleArray:[String] = [String]()
@@ -27,19 +26,16 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
         videoImageDic = Helper.sharedInstance.localImageDic
         
         // Set Up player View
-        playerviewController.view.frame = CGRectMake(self.tabBarController!.view.frame.width-120,0,120,120)
-        videoPlayer.sharedInstance.view.frame = CGRectMake(0,0,playerviewController.view.frame.width,playerviewController.view.frame.height)
-        playerviewController.view.backgroundColor = UIColor.clearColor()
-        playerviewController.view.addSubview(videoPlayer.sharedInstance.view)
-        self.tabBarController!.view.addSubview(playerviewController.view)
+        playerViewController.sharedInstance.tabBarControllerViewFrame = (self.tabBarController?.view.frame)!
+        self.tabBarController!.view.addSubview(playerViewController.sharedInstance.view)
         
-        // Init gesture recognizer
+        /*// Init gesture recognizer
         let swipeUp = UISwipeGestureRecognizer(target: self, action: "respondToSwipeUp:")
         swipeUp.direction = UISwipeGestureRecognizerDirection.Up
         let swipeDown = UISwipeGestureRecognizer(target: self, action: "respondToSwipeDown:")
         swipeDown.direction = UISwipeGestureRecognizerDirection.Down
         self.tabBarController?.view.addGestureRecognizer(swipeDown)
-        self.tabBarController!.view.addGestureRecognizer(swipeUp)
+        self.tabBarController!.view.addGestureRecognizer(swipeUp)*/
         
         // set up table view
         mainTableView.backgroundColor = UIColor.grayColor()
@@ -58,7 +54,7 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
         // Do any additional setup after loading the view, typically from a nib.
     }
     
-    // MARK: - Set Up Floating Player View -
+    /*// MARK: - Set Up Floating Player View -
     
     func respondToSwipeUp(gesture:UIGestureRecognizer){
         self.adjustSize(true, animated: true)
@@ -72,7 +68,8 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
         if(min == true){
             UIView.animateWithDuration(0.5, animations: {
                  self.playerviewController.view.frame = CGRectMake(self.tabBarController!.view.frame.width-120,0,120,120)
-                 self.playerviewController.view.backgroundColor = UIColor.clearColor()
+                 self.playerviewController.view.hidden = true
+                 self.segmentController.hidden = true
                  videoPlayer.sharedInstance.view.frame = CGRectMake(0,0,self.playerviewController.view.frame.width,self.playerviewController.view.frame.height)
                 
             })
@@ -82,12 +79,13 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
                 let wFullSize:CGFloat = (self.tabBarController?.view.frame.width)!-((self.tabBarController?.view.frame.width)!*0.2)
                 let hFullSize:CGFloat = (self.tabBarController?.view.frame.height)!-30-(self.tabBarController?.view.frame.height)!*0.25
                 self.playerviewController.view.frame = CGRectMake(0, 0, (self.tabBarController?.view.frame.width)!, (self.tabBarController?.view.frame.height)!)
-                self.playerviewController.view.backgroundColor = UIColor.greenColor()
+                self.segmentController.hidden = false
+                self.playerviewController.view.hidden = false
                 videoPlayer.sharedInstance.view.frame = CGRectMake((self.tabBarController?.view.frame.width)!*0.1, 30, wFullSize, hFullSize)
             })
         }
             
-    }
+    }*/
     
     
     // MARK: -Populate Table Methods -

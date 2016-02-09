@@ -45,6 +45,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func getData(){
+        self.videoImaDic.removeAll()
         self.videoImaDic = Helper.sharedInstance.getVideoImage("Playist")
         self.playistAmblum = Helper.sharedInstance.playistAmblum
         playistTableView.reloadData()
@@ -106,6 +107,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             self.playistAmblum = Helper.sharedInstance.playistAmblum
             playistTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            (self.tabBarController?.viewControllers![3] as! FourthViewController).getData()
         }
     }
  

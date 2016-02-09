@@ -27,6 +27,7 @@ class FourthViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func getData(){
+        self.videoImaDic.removeAll()
         self.videoImaDic = Helper.sharedInstance.getVideoImage("All")
         self.allAmblum = Helper.sharedInstance.allAmblum
         allTableView.reloadData()
@@ -65,6 +66,8 @@ class FourthViewController: UIViewController,UITableViewDelegate,UITableViewData
             Helper.sharedInstance.removeVideo("All", folderName: "", fileName: (allAmblum[indexPath.row].0))
             self.allAmblum = Helper.sharedInstance.allAmblum
             allTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            (self.tabBarController?.viewControllers![1] as! SecondViewController).getData()
+            (self.tabBarController?.viewControllers![2] as! ThirdViewController).getData()
         }
     }
     

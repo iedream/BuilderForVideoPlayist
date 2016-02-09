@@ -47,6 +47,7 @@ class ThirdViewController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     
     func getData(){
+        self.videoImaDic.removeAll()
         self.videoImaDic = Helper.sharedInstance.getVideoImage("Singer")
         self.singerAmblum = Helper.sharedInstance.singerAmblum
         singerTableView.reloadData()
@@ -103,6 +104,7 @@ class ThirdViewController: UIViewController,UITableViewDataSource,UITableViewDel
             }
             self.singerAmblum = Helper.sharedInstance.singerAmblum
             singerTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            (self.tabBarController?.viewControllers![3] as! FourthViewController).getData()
         }
     }
 

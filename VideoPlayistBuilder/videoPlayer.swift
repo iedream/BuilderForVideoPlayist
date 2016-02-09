@@ -54,7 +54,14 @@ class videoPlayer: AVPlayerViewController{
         self.view.hidden = true
     }
     
-    func setVideoData(currentPlay:currentAmblum,currentPath:String,currentDirectory:String ){
+    func setVideoData(currentPlay:currentAmblum,currentPath:String,currentDirectory:String){
+        
+        if(currentState == videoPlayerState.NotInit){
+            playerViewController.sharedInstance.view.hidden = false
+            playerViewController.sharedInstance.segmentController.hidden = false
+        }
+        
+        view.hidden = false
         self.currentPlayMode = currentPlay
         self.currentPathName = currentPath
         self.currentDirectoryName = currentDirectory

@@ -7,7 +7,6 @@
 //
 
 struct OrderedDictionary{
-    typealias Element = [String:String]
     typealias ArrayType = [String]
     typealias DictionaryType = [String: String]
     
@@ -34,15 +33,26 @@ struct OrderedDictionary{
     }
     
     func indexOfKey(key:String) -> Int{
-        return self.array.indexOf(key)!
+        if( self.array.indexOf(key) != nil){
+            return self.array.indexOf(key)!
+        }
+        return -1
     }
     
     func interate() -> [String:String]{
         return self.dictionary
     }
     
+    mutating func deleteValueUsingPredicate(predicate:NSPredicate){
+        let keysToRemove:NSArray = (self.array as NSArray).filteredArrayUsingPredicate(predicate)
+        for key in keysToRemove.copy() as! NSArray{
+            self.dictionary.removeValueForKey(key as! String)
+            self.array.removeAtIndex(self.array.indexOf(key as! String)!)
+        }
+    }
+    
     func containsKey(key:String) -> Bool{
-        return self.containsKey(key)
+        return self.array.contains(key)
     }
     
     subscript(index: Int) -> (String, String){
@@ -62,11 +72,14 @@ struct OrderedDictionary{
     
     
     mutating func removeKey(key:String) -> (String,String){
-        let index = self.indexOfKey(key)
-        precondition(index < self.array.count || index >= self.array.count, "Index out-of-bouds")
-        let key = self.array.removeAtIndex(index)
-        let value = self.dictionary.removeValueForKey(key)!
-        return (key,value)
+        
+        if(self.array.indexOf(key) != nil){
+            let index = self.indexOfKey(key)
+            let key = self.array.removeAtIndex(index)
+            let value = self.dictionary.removeValueForKey(key)!
+            return (key,value)
+        }
+        return("","")
     }
     
 }
@@ -199,13 +212,19 @@ class Helper{
     }
     
     func removeVideoForAllList(fileName:String){
-        var sectionTitle:[String]!
-        for (sectionName,subDic) in singerAmblum{
-            if(subDic.containsKey(fileName)){
-                sectionTitle.append(sectionName)
-            }
+        let predicate:NSPredicate = NSPredicate(format: "SELF CONTAINS %@", fileName)
+        
+        
+        for (key,_) in singerAmblum{
+            singerAmblum[key]?.deleteValueUsingPredicate(predicate)
         }
-        for name in sectionTitle{
+        
+        for (key,_) in playistAmblum{
+            playistAmblum[key]?.deleteValueUsingPredicate(predicate)
+        }
+        
+        
+       /* for name in sectionTitle{
             singerAmblum[name]?.removeKey(fileName)
         }
         
@@ -217,7 +236,7 @@ class Helper{
         }
         for name in sectionTitle{
             playistAmblum[name]?.removeKey(fileName)
-        }
+        }*/
     }
     
     func removeVideoFromAllAmblum(choice:String,folderName:String){
