@@ -43,8 +43,11 @@ class playerViewController: UIViewController {
         swipeUp.direction = UISwipeGestureRecognizerDirection.Up
         let swipeDown = UISwipeGestureRecognizer(target: self, action: "respondToSwipeDown:")
         swipeDown.direction = UISwipeGestureRecognizerDirection.Down
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeLeft:")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(swipeDown)
         self.view.addGestureRecognizer(swipeUp)
+        self.view.addGestureRecognizer(swipeLeft)
     }
     
     // MARK: - Set Up Floating Player View -
@@ -55,6 +58,11 @@ class playerViewController: UIViewController {
     
     func respondToSwipeDown(gesture:UIGestureRecognizer){
         self.adjustSize(false, animated: true)
+    }
+    
+    func respondToSwipeLeft(gesture:UIGestureRecognizer){
+        videoPlayer.sharedInstance.clear()
+        self.view.hidden = true
     }
     
     func adjustSize(min:Bool,animated:Bool){

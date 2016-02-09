@@ -51,24 +51,20 @@ class videoPlayer: AVPlayerViewController{
     private var currentPlayMode:currentAmblum = currentAmblum.NotInit
     
     override func viewDidLoad() {
-        self.view.hidden = true
     }
     
     func setVideoData(currentPlay:currentAmblum,currentPath:String,currentDirectory:String){
         
         if(currentState == videoPlayerState.NotInit){
             playerViewController.sharedInstance.view.hidden = false
-            playerViewController.sharedInstance.segmentController.hidden = false
+            self.addObserverForVideo()
         }
         
-        view.hidden = false
         self.currentPlayMode = currentPlay
         self.currentPathName = currentPath
         self.currentDirectoryName = currentDirectory
         self.currentState = videoPlayerState.Mutiple_Rotate
         self.playVideo()
-        self.addObserverForVideo()
-        self.view.hidden = false
     }
     
     private func playVideo(){
@@ -80,8 +76,7 @@ class videoPlayer: AVPlayerViewController{
     
     private func addObserverForVideo(){
         if((videoObserver) != nil){
-            return
-           // NSNotificationCenter.defaultCenter().removeObserver(videoObserver)
+           NSNotificationCenter.defaultCenter().removeObserver(videoObserver)
         }
         let notificationCenter = NSNotificationCenter.defaultCenter()
         let mainQueue = NSOperationQueue.mainQueue()
@@ -136,11 +131,12 @@ class videoPlayer: AVPlayerViewController{
     
 
     
-    private func clear(){
+    func clear(){
         if((videoObserver) != nil){
             NSNotificationCenter.defaultCenter().removeObserver(videoObserver)
         }
         player?.replaceCurrentItemWithPlayerItem(nil)
-        self.view.removeFromSuperview()
+        currentState = videoPlayerState.NotInit
+        currentPlayMode = currentAmblum.NotInit
     }
 }
