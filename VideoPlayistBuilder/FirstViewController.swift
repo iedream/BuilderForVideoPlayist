@@ -8,7 +8,13 @@
 import UIKit
 import MediaPlayer
 
-class FirstViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
+enum tableViewState : Int {
+    case Main
+    case Section
+    case Search
+}
+
+class FirstViewController: UIViewController, UITableViewDelegate,UITableViewDataSource{
     
     //@IBOutlet weak var containerView: UIView!
     let achoiceTableView:UITableView = UITableView.init()
@@ -18,6 +24,10 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
     var localVideoDic:[String:String] = [String:String]()
     var titleArray:[String] = [String]()
     var currentVideoFile:[String] = [String]()
+    
+    let searchController = UISearchController(searchResultsController: nil)
+    var searchResults:[String] = [String]()
+    var currentTableViewState:tableViewState = tableViewState.Main
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +39,13 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
         playerViewController.sharedInstance.tabBarControllerViewFrame = (self.tabBarController?.view.frame)!
         self.tabBarController!.view.addSubview(playerViewController.sharedInstance.view)
         
+        
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.sizeToFit()
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        mainTableView.tableHeaderView = searchController.searchBar
+        //tableView.tableHeaderView = searchController.searchBar
         /*// Init gesture recognizer
         let swipeUp = UISwipeGestureRecognizer(target: self, action: "respondToSwipeUp:")
         swipeUp.direction = UISwipeGestureRecognizerDirection.Up
@@ -49,7 +66,6 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
         achoiceTableView.hidden = true
         achoiceTableView.registerClass(choiceCell.classForCoder(), forCellReuseIdentifier: "choiceCell")
         self.view.addSubview(achoiceTableView)
-        
 
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -94,7 +110,9 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(tableView == mainTableView){
+        if (currentTableViewState == tableViewState.Search){
+            return searchResults.count
+        }else if(currentTableViewState == tableViewState.Main){
             return localVideoDic.count
         }else{
             return titleArray.count
@@ -102,7 +120,20 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if(tableView == mainTableView){
+        
+        if(currentTableViewState == tableViewState.Search){
+            
+             let cell = mainTableView.dequeueReusableCellWithIdentifier("IpodLibraryCell", forIndexPath: indexPath) as UITableViewCell
+            
+            let title:String = searchResults[indexPath.row]
+            cell.textLabel?.text = title
+            
+            if((videoImageDic[title]) != nil){
+                cell.imageView?.image = videoImageDic[title]
+            }
+            return cell
+
+        }else if(currentTableViewState == tableViewState.Main){
             let cell = mainTableView.dequeueReusableCellWithIdentifier("IpodLibraryCell", forIndexPath: indexPath) as UITableViewCell
         
             let title:String = Array(localVideoDic.keys)[indexPath.row]
@@ -172,19 +203,36 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
             achoiceTableView.frame = frame
             achoiceTableView.contentSize = CGSize(width: viewWidth20*2-5, height: self.view.frame.height*0.85-startY)
             titleArray = newTitleArray
+            currentTableViewState = tableViewState.Section
             achoiceTableView.reloadData()
             achoiceTableView.hidden = false
         }else{
+            currentTableViewState = tableViewState.Main
             achoiceTableView.hidden = true
         }
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if(scrollView == mainTableView){
+            currentTableViewState = tableViewState.Main
             achoiceTableView.hidden = true
         }
     }
-
+    
+    func filterContentForSearchText(searchText:String){
+        let finalSearchText:String = searchText.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        
+        let predicate: NSPredicate = NSPredicate { (AnyObject name, NSDictionary bindings) -> Bool in
+            let finalName:String = name.lowercaseString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            if(finalName.containsString(finalSearchText)){
+                return true
+            }
+            return false
+        }
+        searchResults = Array(localVideoDic.keys).filter({predicate.evaluateWithObject($0)})
+        mainTableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -194,3 +242,14 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
 
 }
 
+extension FirstViewController: UISearchResultsUpdating{
+    func updateSearchResultsForSearchController(searchControllers: UISearchController) {
+        if(searchControllers.searchBar.text != ""){
+            currentTableViewState = tableViewState.Search
+            filterContentForSearchText(searchControllers.searchBar.text!)
+        }else{
+            currentTableViewState = tableViewState.Main
+            mainTableView.reloadData()
+        }
+    }
+}
