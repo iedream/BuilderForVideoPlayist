@@ -28,11 +28,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VideoPlayistBuilder/ThirdViewController.swift"
-            timestampString = "476675413.636661"
+            timestampString = "476849026.335671"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "didReceiveMemoryWarning()"
             landmarkType = "5">
          </BreakpointContent>
@@ -44,11 +44,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VideoPlayistBuilder/FourthViewController.swift"
-            timestampString = "476675413.636661"
+            timestampString = "476849026.335671"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "didReceiveMemoryWarning()"
             landmarkType = "5">
          </BreakpointContent>
@@ -60,11 +60,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VideoPlayistBuilder/Helper.swift"
-            timestampString = "476772378.278474"
+            timestampString = "476847741.425859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
             landmarkName = "removeVideoForAllList(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -76,11 +76,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VideoPlayistBuilder/Helper.swift"
-            timestampString = "476772378.278474"
+            timestampString = "476847741.425859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "removeVideoForAllList(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -108,11 +108,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VideoPlayistBuilder/Helper.swift"
-            timestampString = "476676593.387346"
+            timestampString = "476847741.425859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "removeKey(_:)"
             landmarkType = "5">
          </BreakpointContent>

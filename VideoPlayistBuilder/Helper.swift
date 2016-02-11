@@ -51,6 +51,11 @@ struct OrderedDictionary{
         }
     }
     
+    func filterUsingPredicate(predicate:NSPredicate) -> [String]{
+        let result:[String] = self.array.filter({predicate.evaluateWithObject($0)})
+        return result
+    }
+    
     func containsKey(key:String) -> Bool{
         return self.array.contains(key)
     }

@@ -50,7 +50,9 @@ class ThirdViewController: UIViewController,UITableViewDataSource,UITableViewDel
         self.videoImaDic.removeAll()
         self.videoImaDic = Helper.sharedInstance.getVideoImage("Singer")
         self.singerAmblum = Helper.sharedInstance.singerAmblum
-        singerTableView.reloadData()
+        if(singerTableView != nil){
+            singerTableView.reloadData()
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

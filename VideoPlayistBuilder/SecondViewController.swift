@@ -48,7 +48,9 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.videoImaDic.removeAll()
         self.videoImaDic = Helper.sharedInstance.getVideoImage("Playist")
         self.playistAmblum = Helper.sharedInstance.playistAmblum
-        playistTableView.reloadData()
+        if(playistTableView != nil){
+            playistTableView.reloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {

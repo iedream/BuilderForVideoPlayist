@@ -39,7 +39,6 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
         playerViewController.sharedInstance.tabBarControllerViewFrame = (self.tabBarController?.view.frame)!
         self.tabBarController!.view.addSubview(playerViewController.sharedInstance.view)
         
-        
         searchController.searchResultsUpdater = self
         searchController.searchBar.sizeToFit()
         searchController.dimsBackgroundDuringPresentation = false
