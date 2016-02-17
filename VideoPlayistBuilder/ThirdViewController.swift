@@ -34,6 +34,7 @@ class ThirdViewController: UIViewController,UITableViewDataSource,UITableViewDel
         })
         let addAction:UIAlertAction = UIAlertAction.init(title: "Add", style: UIAlertActionStyle.Default, handler: {(action) in
             Helper.sharedInstance.writeToFolder("Singer", key:(self.alert.textFields?.first?.text)!)
+            (self.tabBarController?.viewControllers![0] as! FirstViewController).getData()
             self.getData()
             
         })
@@ -101,6 +102,7 @@ class ThirdViewController: UIViewController,UITableViewDataSource,UITableViewDel
         if(editingStyle == UITableViewCellEditingStyle.Delete){
             if( sectionTitle == ""){
                 Helper.sharedInstance.removeFolder("Singer", folderName: Array(singerAmblum.keys)[indexPath.row])
+                (self.tabBarController?.viewControllers![0] as! FirstViewController).getData()
             }else{
                 Helper.sharedInstance.removeVideo("Singer", folderName: sectionTitle, fileName: (singerAmblum[sectionTitle]![indexPath.row].0))
             }
@@ -122,6 +124,4 @@ class ThirdViewController: UIViewController,UITableViewDataSource,UITableViewDel
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }

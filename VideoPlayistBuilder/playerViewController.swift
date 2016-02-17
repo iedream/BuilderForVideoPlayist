@@ -14,6 +14,8 @@ class playerViewController: UIViewController {
     // Singleton
     static let sharedInstance = playerViewController()
     
+    var min:Bool = true
+    
     let segmentController:UISegmentedControl = UISegmentedControl.init(items: ["Multi","Single","Shuffle"])
     var tabBarControllerViewFrame:CGRect = CGRectMake(0, 0, 0, 0)
     
@@ -71,7 +73,8 @@ class playerViewController: UIViewController {
                 self.view.frame = CGRectMake(self.tabBarControllerViewFrame.width-120,0,120,120)
                 self.segmentController.hidden = true
                 videoPlayer.sharedInstance.view.frame = CGRectMake(0,0,self.view.frame.width,self.view.frame.height)
-                
+                 //UIDevice.currentDevice().setValue(UIInterfaceOrientation.Portrait.rawValue, forKey: "orientation")
+                self.min = true
             })
             
         }else{
@@ -81,6 +84,7 @@ class playerViewController: UIViewController {
                 self.view.frame = CGRectMake(0, 0,self.tabBarControllerViewFrame.width,self.tabBarControllerViewFrame.height)
                 self.segmentController.hidden = false
                 videoPlayer.sharedInstance.view.frame = CGRectMake(self.tabBarControllerViewFrame.width*0.1, 30, wFullSize, hFullSize)
+                self.min = false
             })
         }
         
@@ -99,8 +103,25 @@ class playerViewController: UIViewController {
         }
     }
 
+    func restrictRotation(restriction:Bool){
+        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.restrictRotation = restriction
+    }
     
     override func didReceiveMemoryWarning() {
          super.didReceiveMemoryWarning()
+    }
+    
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if(keyPath == "videoBounds"){
+            if(videoPlayer.sharedInstance.videoBounds.width >= tabBarControllerViewFrame.width){
+                NSLog("YEY")
+                self.restrictRotation(false)
+            }else{
+                self.restrictRotation(true)
+                 UIDevice.currentDevice().setValue(UIInterfaceOrientation.Portrait.rawValue, forKey: "orientation")
+                self.adjustSize(min, animated: true)
+            }
+        }
     }
 }

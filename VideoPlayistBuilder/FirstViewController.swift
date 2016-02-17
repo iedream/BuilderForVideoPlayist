@@ -23,6 +23,7 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
     var videoImageDic:[String:UIImage] = [String:UIImage]()
     var localVideoDic:[String:String] = [String:String]()
     var titleArray:[String] = [String]()
+    var titleArrayType:String?
     var currentVideoFile:[String] = [String]()
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -67,6 +68,13 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
         self.view.addSubview(achoiceTableView)
 
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func getData(){
+        if(currentTableViewState == tableViewState.Section){
+            titleArray = Helper.sharedInstance.getChosenArray(titleArrayType!)
+            achoiceTableView.reloadData()
+        }
     }
     
     /*// MARK: - Set Up Floating Player View -
@@ -201,6 +209,7 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
             
             achoiceTableView.frame = frame
             achoiceTableView.contentSize = CGSize(width: viewWidth20*2-5, height: self.view.frame.height*0.85-startY)
+            titleArrayType = title
             titleArray = newTitleArray
             currentTableViewState = tableViewState.Section
             achoiceTableView.reloadData()
@@ -237,8 +246,11 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
         // Dispose of any resources that can be recreated.
     }
     
-
-
+    func restrictRotation(restriction:Bool){
+        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.restrictRotation = restriction
+    }
+    
 }
 
 extension FirstViewController: UISearchResultsUpdating{

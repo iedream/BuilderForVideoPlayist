@@ -12,6 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var restrictRotation:Bool = true
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -19,6 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Helper.sharedInstance.populatePlayListFromPlist()
         Helper.sharedInstance.getIpodLibraryInformation()
         return true
+    }
+    
+    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+        if(self.restrictRotation){
+            return UIInterfaceOrientationMask.Portrait
+        }
+        return UIInterfaceOrientationMask.All
     }
 
     func applicationWillResignActive(application: UIApplication) {

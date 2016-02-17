@@ -50,7 +50,7 @@ class videoPlayer: AVPlayerViewController{
     private var currentState:videoPlayerState = videoPlayerState.NotInit
     private var currentPlayMode:currentAmblum = currentAmblum.NotInit
     
-    override func viewDidLoad() {  
+    override func viewDidLoad() {
     }
     
     func setVideoData(currentPlay:currentAmblum,currentPath:String,currentDirectory:String){
@@ -65,6 +65,7 @@ class videoPlayer: AVPlayerViewController{
         self.currentDirectoryName = currentDirectory
         self.currentState = videoPlayerState.Mutiple_Rotate
         self.playVideo()
+        self.addObserver((self.view.superview?.nextResponder())!, forKeyPath: "videoBounds", options: NSKeyValueObservingOptions.New, context: nil)
     }
     
     private func playVideo(){
@@ -129,12 +130,11 @@ class videoPlayer: AVPlayerViewController{
         currentPlayMode = mode
     }
     
-
-    
     func clear(){
         if((videoObserver) != nil){
             NSNotificationCenter.defaultCenter().removeObserver(videoObserver)
         }
+        self.removeObserver((self.view.superview?.nextResponder())!, forKeyPath: "videoBounds")
         player?.replaceCurrentItemWithPlayerItem(nil)
         currentState = videoPlayerState.NotInit
         currentPlayMode = currentAmblum.NotInit

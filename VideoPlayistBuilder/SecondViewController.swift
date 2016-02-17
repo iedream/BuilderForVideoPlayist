@@ -32,6 +32,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         })
         let addAction:UIAlertAction = UIAlertAction.init(title: "Add", style: UIAlertActionStyle.Default, handler: {(action) in
             Helper.sharedInstance.writeToFolder("Playist", key:(self.alert.textFields?.first?.text)!)
+            (self.tabBarController?.viewControllers![0] as! FirstViewController).getData()
             self.getData()
             
         })
@@ -104,6 +105,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if(editingStyle == UITableViewCellEditingStyle.Delete){
             if( sectionTitle == ""){
                  Helper.sharedInstance.removeFolder("Playist", folderName: Array(playistAmblum.keys)[indexPath.row])
+                (self.tabBarController?.viewControllers![0] as! FirstViewController).getData()
             }else{
                 Helper.sharedInstance.removeVideo("Playist", folderName: sectionTitle, fileName: (playistAmblum[sectionTitle]![indexPath.row].0))
             }
@@ -120,6 +122,5 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func addToPlayist(sender: AnyObject) {
         self.presentViewController(alert, animated: true, completion: nil)
     }
-
 }
 
