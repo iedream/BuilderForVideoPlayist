@@ -67,8 +67,8 @@ class playerViewController: UIViewController {
         self.view.hidden = true
     }
     
-    func adjustSize(min:Bool,animated:Bool){
-        if(min == true){
+    func adjustSize(minValue:Bool,animated:Bool){
+        if(minValue == true){
             UIView.animateWithDuration(0.5, animations: {
                 self.view.frame = CGRectMake(self.tabBarControllerViewFrame.width-120,0,120,120)
                 self.segmentController.hidden = true
@@ -113,13 +113,14 @@ class playerViewController: UIViewController {
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        
         if(keyPath == "videoBounds"){
             if(videoPlayer.sharedInstance.videoBounds.width >= tabBarControllerViewFrame.width ){
                 NSLog("YEY")
                 self.restrictRotation(false)
-            }else if(videoPlayer.sharedInstance.videoBounds.width != 0){
+            }else if( !(videoPlayer.sharedInstance.videoBounds.width == 0 && videoPlayer.sharedInstance.videoBounds.origin.x < 0)){
                 self.restrictRotation(true)
-                 UIDevice.currentDevice().setValue(UIInterfaceOrientation.Portrait.rawValue, forKey: "orientation")
+                UIDevice.currentDevice().setValue(UIInterfaceOrientation.Portrait.rawValue, forKey: "orientation")
                 self.adjustSize(min, animated: true)
             }
         }
