@@ -93,6 +93,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        playistTableView.deselectRowAtIndexPath(indexPath, animated: true)
         if(sectionTitle == ""){
             sectionTitle = Array(playistAmblum.keys)[indexPath.row]
             playistTableView.reloadData()

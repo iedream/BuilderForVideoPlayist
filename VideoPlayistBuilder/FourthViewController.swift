@@ -77,6 +77,7 @@ class FourthViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        allTableView.deselectRowAtIndexPath(indexPath, animated: true)
         var name:String!
         if(searchController.active){
             name = searchResults[indexPath.row]

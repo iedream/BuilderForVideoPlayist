@@ -90,6 +90,7 @@ class ThirdViewController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        singerTableView.deselectRowAtIndexPath(indexPath, animated: true)
         if(sectionTitle == ""){
             sectionTitle = Array(singerAmblum.keys)[indexPath.row]
             singerTableView.reloadData()
