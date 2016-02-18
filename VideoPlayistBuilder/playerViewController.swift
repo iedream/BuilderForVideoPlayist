@@ -114,10 +114,10 @@ class playerViewController: UIViewController {
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if(keyPath == "videoBounds"){
-            if(videoPlayer.sharedInstance.videoBounds.width >= tabBarControllerViewFrame.width){
+            if(videoPlayer.sharedInstance.videoBounds.width >= tabBarControllerViewFrame.width ){
                 NSLog("YEY")
                 self.restrictRotation(false)
-            }else{
+            }else if(videoPlayer.sharedInstance.videoBounds.width != 0){
                 self.restrictRotation(true)
                  UIDevice.currentDevice().setValue(UIInterfaceOrientation.Portrait.rawValue, forKey: "orientation")
                 self.adjustSize(min, animated: true)

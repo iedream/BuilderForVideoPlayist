@@ -29,6 +29,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         alert.addTextFieldWithConfigurationHandler({(textField:UITextField!) in
             textField.placeholder = "Playist Name"
+            textField.clearsOnBeginEditing = true
         })
         let addAction:UIAlertAction = UIAlertAction.init(title: "Add", style: UIAlertActionStyle.Default, handler: {(action) in
             Helper.sharedInstance.writeToFolder("Playist", key:(self.alert.textFields?.first?.text)!)

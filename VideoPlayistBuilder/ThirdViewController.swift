@@ -31,6 +31,7 @@ class ThirdViewController: UIViewController,UITableViewDataSource,UITableViewDel
         
         alert.addTextFieldWithConfigurationHandler({(textField:UITextField!) in
             textField.placeholder = "Singer Name"
+            textField.clearsOnBeginEditing = true
         })
         let addAction:UIAlertAction = UIAlertAction.init(title: "Add", style: UIAlertActionStyle.Default, handler: {(action) in
             Helper.sharedInstance.writeToFolder("Singer", key:(self.alert.textFields?.first?.text)!)
