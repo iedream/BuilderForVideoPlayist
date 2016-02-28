@@ -51,6 +51,7 @@ class videoPlayer: AVPlayerViewController{
     private var currentPlayMode:currentAmblum = currentAmblum.NotInit
     
     override func viewDidLoad() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
     }
     
     func setVideoData(currentPlay:currentAmblum,currentPath:String,currentDirectory:String){
@@ -191,5 +192,46 @@ class videoPlayer: AVPlayerViewController{
         player?.replaceCurrentItemWithPlayerItem(nil)
         currentState = videoPlayerState.NotInit
         currentPlayMode = currentAmblum.NotInit
+    }
+    
+    func applicationDidEnterBackground(notification:NSNotification){
+        self.performSelector("playInBackground", withObject: nil, afterDelay: 0.01)
+    }
+
+    func playInBackground(){
+        self.player?.play()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+        self.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.player?.pause()
+        super.viewDidDisappear(animated)
+        UIApplication.sharedApplication().endReceivingRemoteControlEvents()
+        self.resignFirstResponder()
+    }
+    
+    override func remoteControlReceivedWithEvent(event: UIEvent?) {
+        switch (event!.subtype){
+        case UIEventSubtype.RemoteControlTogglePlayPause:
+            if(self.player?.rate == 0){
+                player?.play()
+            }else{
+                player?.pause()
+            }
+            break
+        case UIEventSubtype.RemoteControlPlay:
+            player?.play()
+            break
+        case UIEventSubtype.RemoteControlPause:
+            player?.pause()
+            break
+        default:
+            break
+        }
     }
 }
