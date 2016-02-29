@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
         // Override point for customization after application launch.
         do{
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
@@ -25,6 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         }
         Helper.sharedInstance.populatePlayListFromPlist()
         Helper.sharedInstance.getIpodLibraryInformation()
+        
+        let tabBarController:UITabBarController = self.window?.rootViewController as! UITabBarController
+        tabBarController.selectedIndex = 1;
+
         return true
     }
     

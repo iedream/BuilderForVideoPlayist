@@ -202,8 +202,25 @@ class Helper{
             allAmblum.removeKey(fileName)
             removeVideoForAllList(fileName)
         }
-        allAmblum.removeKey(fileName)
+        if(!checkSongExistence(fileName)){
+            allAmblum.removeKey(fileName)
+
+        }
         writeToModifyPlist()
+    }
+    
+    func checkSongExistence(fileName:String) -> Bool{
+        for (_,dict) in singerAmblum {
+            if(dict.containsKey(fileName)){
+                return true
+            }
+        }
+        for (_,dict) in playistAmblum {
+            if(dict.containsKey(fileName)){
+                return true
+            }
+        }
+        return false
     }
     
     func removeFolder(choice:String, folderName:String){
@@ -227,21 +244,6 @@ class Helper{
         for (key,_) in playistAmblum{
             playistAmblum[key]?.deleteValueUsingPredicate(predicate)
         }
-        
-        
-       /* for name in sectionTitle{
-            singerAmblum[name]?.removeKey(fileName)
-        }
-        
-        sectionTitle.removeAll()
-        for (sectionName,subDic) in playistAmblum{
-            if(subDic.containsKey(fileName)){
-                sectionTitle.append(sectionName)
-            }
-        }
-        for name in sectionTitle{
-            playistAmblum[name]?.removeKey(fileName)
-        }*/
     }
     
     func removeVideoFromAllAmblum(choice:String,folderName:String){
