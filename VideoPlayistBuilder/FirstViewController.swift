@@ -36,9 +36,6 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
         localVideoDic = Helper.sharedInstance.localAmblum
         videoImageDic = Helper.sharedInstance.localImageDic
         
-        // Set Up player View
-        playerViewController.sharedInstance.tabBarControllerViewFrame = (self.tabBarController?.view.frame)!
-        self.tabBarController!.view.addSubview(playerViewController.sharedInstance.view)
         
         searchController.searchResultsUpdater = self
         searchController.searchBar.sizeToFit()

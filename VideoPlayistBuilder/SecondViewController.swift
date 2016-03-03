@@ -25,6 +25,10 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set Up player View
+        playerViewController.sharedInstance.tabBarControllerViewFrame = (self.tabBarController?.view.frame)!
+        self.tabBarController!.view.addSubview(playerViewController.sharedInstance.view)
+        
         self.getData()
         
         alert.addTextFieldWithConfigurationHandler({(textField:UITextField!) in

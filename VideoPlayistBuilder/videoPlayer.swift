@@ -91,68 +91,101 @@ class videoPlayer: AVPlayerViewController{
         let notificationCenter = NSNotificationCenter.defaultCenter()
         let mainQueue = NSOperationQueue.mainQueue()
         videoObserver = notificationCenter.addObserverForName(AVPlayerItemDidPlayToEndTimeNotification, object: nil, queue: mainQueue) { _ in
-            
-            if( self.currentState == videoPlayerState.Mutiple_Rotate){
-                let currentDic:OrderedDictionary = self.getCurrentFolder()
-                if(currentDic.count == 0){
-                    let alert:UIAlertView = UIAlertView(title: "Playlist that does not exit", message: "The playlist you are playing does not exit anymore. Please play another", delegate: self, cancelButtonTitle: "OK")
-                    self.clear()
-                    alert.show()
-                    return
-                }
-                
-                var currentIndex:NSInteger = 0
-                if(currentDic.array.contains(self.currentPathName)){
-                    currentIndex = currentDic.indexOfKey(self.currentPathName)
-                }else if(currentDic.count == 0){
-                    let alert:UIAlertView = UIAlertView(title: "No Video", message: "There is no more video left in this playlist. Please add some videos.", delegate: self, cancelButtonTitle: "OK")
-                    self.clear()
-                    alert.show()
-                    return
-                }
-            
-                var newIndex:NSInteger = currentIndex + 1
-                if( newIndex >= currentDic.count){
-                    newIndex = 0
-                }
-                self.currentPathName = currentDic[newIndex].0
-                self.playVideo()
-            }else if(self.currentState == videoPlayerState.Singer_Rotate){
-                let currentDic:OrderedDictionary = self.getCurrentFolder()
-                if(currentDic.count == 0){
-                    let alert:UIAlertView = UIAlertView(title: "Playlist Error", message: "There is no more video left in the playist or the playist doesn't exist anymore.", delegate: self, cancelButtonTitle: "OK")
-                    self.clear()
-                    alert.show()
-                    return
-                }
-                
-                if(currentDic.array.contains(self.currentPathName)){
-                    self.playVideo()
-                }else{
-                    let alert:UIAlertView = UIAlertView(title: "Video does not exit", message: "The video you are playing does not exit anymore. Please play another", delegate: self, cancelButtonTitle: "OK")
-                    self.clear()
-                    alert.show()
-                    return
-                }
-            }else if(self.currentState == videoPlayerState.Random_Rotate){
-                let currentDic:OrderedDictionary = self.getCurrentFolder()
-                if(currentDic.count == 0){
-                    let alert:UIAlertView = UIAlertView(title: "Playlist Error", message: "There is no more video left in the playist or the playist doesn't exist anymore.", delegate: self, cancelButtonTitle: "OK")
-                    self.clear()
-                    alert.show()
-                    return
-                }
-                if( currentDic.count == 0){
-                    let alert:UIAlertView = UIAlertView(title: "No Video", message: "There is no more video left in this playlist. Please add some videos.", delegate: self, cancelButtonTitle: "OK")
-                    self.clear()
-                    alert.show()
-                    return
-                }
-                let newIndex:NSInteger =  NSInteger(arc4random_uniform(UInt32(currentDic.count)))
-                self.currentPathName = currentDic[newIndex].0
-                self.playVideo()
+            self.playNextSong()
+        }
+    }
+    
+    func playPrevSong() {
+        if( self.currentState == videoPlayerState.Mutiple_Rotate){
+            let currentDic:OrderedDictionary = self.getCurrentFolder()
+            if(currentDic.count == 0){
+                let alert:UIAlertView = UIAlertView(title: "Playlist that does not exit", message: "The playlist you are playing does not exit anymore. Please play another", delegate: self, cancelButtonTitle: "OK")
+                self.clear()
+                alert.show()
+                return
             }
             
+            var currentIndex:NSInteger = 0
+            if(currentDic.array.contains(self.currentPathName)){
+                currentIndex = currentDic.indexOfKey(self.currentPathName)
+            }else if(currentDic.count == 0){
+                let alert:UIAlertView = UIAlertView(title: "No Video", message: "There is no more video left in this playlist. Please add some videos.", delegate: self, cancelButtonTitle: "OK")
+                self.clear()
+                alert.show()
+                return
+            }
+            
+            var newIndex:NSInteger = currentIndex - 1
+            if( newIndex < 0){
+                newIndex = currentDic.count - 1
+            }
+            self.currentPathName = currentDic[newIndex].0
+            self.playVideo()
+        }else{
+            self.playNextSong()
+        }
+    }
+    
+    func playNextSong() {
+        if( self.currentState == videoPlayerState.Mutiple_Rotate){
+            let currentDic:OrderedDictionary = self.getCurrentFolder()
+            if(currentDic.count == 0){
+                let alert:UIAlertView = UIAlertView(title: "Playlist that does not exit", message: "The playlist you are playing does not exit anymore. Please play another", delegate: self, cancelButtonTitle: "OK")
+                self.clear()
+                alert.show()
+                return
+            }
+            
+            var currentIndex:NSInteger = 0
+            if(currentDic.array.contains(self.currentPathName)){
+                currentIndex = currentDic.indexOfKey(self.currentPathName)
+            }else if(currentDic.count == 0){
+                let alert:UIAlertView = UIAlertView(title: "No Video", message: "There is no more video left in this playlist. Please add some videos.", delegate: self, cancelButtonTitle: "OK")
+                self.clear()
+                alert.show()
+                return
+            }
+            
+            var newIndex:NSInteger = currentIndex + 1
+            if( newIndex >= currentDic.count){
+                newIndex = 0
+            }
+            self.currentPathName = currentDic[newIndex].0
+            self.playVideo()
+        }else if(self.currentState == videoPlayerState.Singer_Rotate){
+            let currentDic:OrderedDictionary = self.getCurrentFolder()
+            if(currentDic.count == 0){
+                let alert:UIAlertView = UIAlertView(title: "Playlist Error", message: "There is no more video left in the playist or the playist doesn't exist anymore.", delegate: self, cancelButtonTitle: "OK")
+                self.clear()
+                alert.show()
+                return
+            }
+            
+            if(currentDic.array.contains(self.currentPathName)){
+                self.playVideo()
+            }else{
+                let alert:UIAlertView = UIAlertView(title: "Video does not exit", message: "The video you are playing does not exit anymore. Please play another", delegate: self, cancelButtonTitle: "OK")
+                self.clear()
+                alert.show()
+                return
+            }
+        }else if(self.currentState == videoPlayerState.Random_Rotate){
+            let currentDic:OrderedDictionary = self.getCurrentFolder()
+            if(currentDic.count == 0){
+                let alert:UIAlertView = UIAlertView(title: "Playlist Error", message: "There is no more video left in the playist or the playist doesn't exist anymore.", delegate: self, cancelButtonTitle: "OK")
+                self.clear()
+                alert.show()
+                return
+            }
+            if( currentDic.count == 0){
+                let alert:UIAlertView = UIAlertView(title: "No Video", message: "There is no more video left in this playlist. Please add some videos.", delegate: self, cancelButtonTitle: "OK")
+                self.clear()
+                alert.show()
+                return
+            }
+            let newIndex:NSInteger =  NSInteger(arc4random_uniform(UInt32(currentDic.count)))
+            self.currentPathName = currentDic[newIndex].0
+            self.playVideo()
         }
     }
     
@@ -229,6 +262,12 @@ class videoPlayer: AVPlayerViewController{
             break
         case UIEventSubtype.RemoteControlPause:
             player?.pause()
+            break
+        case UIEventSubtype.RemoteControlNextTrack:
+            self.playNextSong()
+            break
+        case UIEventSubtype.RemoteControlPreviousTrack:
+            self.playPrevSong()
             break
         default:
             break
