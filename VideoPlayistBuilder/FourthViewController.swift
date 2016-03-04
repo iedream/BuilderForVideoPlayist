@@ -13,7 +13,7 @@ class FourthViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     @IBOutlet weak var allTableView: UITableView!
     var allAmblum:OrderedDictionary = Helper.sharedInstance.allAmblum
-    var videoImaDic:[String:UIImage] = [String:UIImage]()
+    var videoImaDic:NSMutableDictionary = NSMutableDictionary()
     
     let searchController = UISearchController(searchResultsController: nil)
     var searchResults:[String] = [String]()
@@ -36,8 +36,7 @@ class FourthViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func getData(){
-        self.videoImaDic.removeAll()
-        self.videoImaDic = Helper.sharedInstance.getVideoImage("All")
+        self.videoImaDic = Helper.sharedInstance.localImageDic
         self.allAmblum = Helper.sharedInstance.allAmblum
         if(allTableView != nil){
             allTableView.reloadData()
@@ -69,7 +68,7 @@ class FourthViewController: UIViewController,UITableViewDelegate,UITableViewData
 
         cell.textLabel?.text = name
         if((videoImaDic[name]) != nil){
-            cell.imageView?.image = videoImaDic[name]
+            cell.imageView?.image = videoImaDic.objectForKey(name) as? UIImage
         }else{
             cell.imageView?.image = nil
         }

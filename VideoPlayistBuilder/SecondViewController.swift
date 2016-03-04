@@ -16,7 +16,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var playistAmblum:[String:OrderedDictionary] = Helper.sharedInstance.playistAmblum
     var sectionTitle:String = ""
-    var videoImaDic:[String:UIImage] = [String:UIImage]()
+    var videoImaDic:NSMutableDictionary = NSMutableDictionary()
 
     let cancelAction:UIAlertAction = UIAlertAction.init(title: "Cancel", style: UIAlertActionStyle.Cancel, handler:{(action) in
         
@@ -51,8 +51,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func getData(){
-        self.videoImaDic.removeAll()
-        self.videoImaDic = Helper.sharedInstance.getVideoImage("Playist")
+        self.videoImaDic = Helper.sharedInstance.localImageDic
         self.playistAmblum = Helper.sharedInstance.playistAmblum
         if(playistTableView != nil){
             playistTableView.reloadData()
@@ -89,7 +88,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         cell.textLabel?.text = name
         if((videoImaDic[name]) != nil){
-            cell.imageView?.image = videoImaDic[name]
+            cell.imageView?.image = videoImaDic[name] as? UIImage
         }else{
             cell.imageView?.image = nil
         }

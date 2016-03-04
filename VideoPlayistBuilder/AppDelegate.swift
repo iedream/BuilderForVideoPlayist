@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             
         }
         Helper.sharedInstance.populatePlayListFromPlist()
-        Helper.sharedInstance.getIpodLibraryInformation()
         
         let tabBarController:UITabBarController = self.window?.rootViewController as! UITabBarController
         tabBarController.selectedIndex = 1;

@@ -106,7 +106,7 @@ class Helper{
     var singerAmblum:[String:OrderedDictionary] = [String:OrderedDictionary]()
     var allAmblum:OrderedDictionary = OrderedDictionary()
     var localAmblum:[String:String] = [String:String]()
-    var localImageDic:[String:UIImage] = [String:UIImage]()
+    var localImageDic:NSMutableDictionary = NSMutableDictionary()
     
     
     // MARK: - Get Data From Ipod Library -
@@ -118,32 +118,51 @@ class Helper{
             let path:NSURL = item.valueForProperty(MPMediaItemPropertyAssetURL) as! NSURL
             localAmblum[name] = path.absoluteString
             // Setting up to get image from mp4
-            self.captureFrame(path, timeInSeconds: 12, key:name)
+            if(localImageDic[name] == nil){
+                self.captureFrame(path, timeInSeconds: 12, key:name)
+            }
         }
     }
     
-    func getVideoImage(type:String) -> [String:UIImage]{
-        var imageDic:[String:UIImage] = [String:UIImage]()
-        if (type == "Playist"){
-            for(_,subDic) in playistAmblum{
-                for(name,_) in subDic.interate(){
-                    imageDic[name] = localImageDic[name]
-                }
-            }
-        }else if( type == "Singer"){
-            for(_,subDic) in singerAmblum{
-                for(name,_) in subDic.interate(){
-                    imageDic[name] = localImageDic[name]
-                }
-            }
-        }else if( type == "All"){
-            for(name,_) in allAmblum.interate(){
-                imageDic[name] = localImageDic[name]
+    func getIpodLibraryImages() {
+        for(name,path) in allAmblum.interate(){
+            if(localImageDic[name] == nil){
+                self.captureFrame(NSURL(string: path)!, timeInSeconds: 12, key: name)
             }
         }
-        return imageDic
     }
     
+//    func getVideoImage(type:String) -> NSDictionary{
+//        var imageDic:NSDictionary = NSDictionary()
+//        if (type == "Playist"){
+//            for(_,subDic) in playistAmblum{
+//                for(name,path) in subDic.interate(){
+//                    if(localImageDic[name] == nil){
+//                        self.captureFrame(NSURL(string: path)!, timeInSeconds: 12, key: name)
+//                    }
+//                    imageDic[name] = localImageDic[name]
+//                }
+//            }
+//        }else if( type == "Singer"){
+//            for(_,subDic) in singerAmblum{
+//                for(name,path) in subDic.interate(){
+//                    if(localImageDic[name] == nil){
+//                        self.captureFrame(NSURL(string: path)!, timeInSeconds: 12, key: name)
+//                    }
+//                    imageDic[name] = localImageDic[name]
+//                }
+//            }
+//        }else if( type == "All"){
+//            for(name,path) in allAmblum.interate(){
+//                if(localImageDic[name] == nil){
+//                    self.captureFrame(NSURL(string: path)!, timeInSeconds: 12, key: name)
+//                }
+//                imageDic[name] = localImageDic[name]
+//            }
+//        }
+//        return imageDic
+//    }
+
     // MARK: - Get Individual Mp4 Image To Disply -
     
     // Acutally getting the image
@@ -283,6 +302,7 @@ class Helper{
         
         convertFromBasicType(resultDictionary.objectForKey("singerAmblum") as! NSDictionary, type: "Singer")
         convertFromBasicType(resultDictionary.objectForKey("playistAmblum") as! NSDictionary, type: "Playist")
+        self.getIpodLibraryImages()
     }
     
     func convertFromBasicType(dictToConvert:NSDictionary,type:String){

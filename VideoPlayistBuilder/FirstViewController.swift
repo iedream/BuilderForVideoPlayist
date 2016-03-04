@@ -20,7 +20,7 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
     let achoiceTableView:UITableView = UITableView.init()
     @IBOutlet weak var mainTableView: UITableView!
     
-    var videoImageDic:[String:UIImage] = [String:UIImage]()
+    var videoImageDic:NSMutableDictionary!
     var localVideoDic:[String:String] = [String:String]()
     var titleArray:[String] = [String]()
     var titleArrayType:String?
@@ -30,12 +30,42 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
     var searchResults:[String] = [String]()
     var currentTableViewState:tableViewState = tableViewState.Main
     
+    var blurView:UIVisualEffectView!
+    var spinnerView:UIActivityIndicatorView!
+    
+    let queue:NSOperationQueue = NSOperationQueue.init()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        localVideoDic = Helper.sharedInstance.localAmblum
-        videoImageDic = Helper.sharedInstance.localImageDic
+        blurView = UIVisualEffectView(effect: UIBlurEffect(style: .ExtraLight))
+        blurView.frame = self.view.bounds
         
+        spinnerView = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+        spinnerView.center = CGPointMake(self.view.frame.width/2,self.view.frame.height/2)
+        spinnerView.color = UIColor.redColor()
+        
+        blurView.addSubview(spinnerView)
+        
+        if(Helper.sharedInstance.localAmblum.count == 0){
+            spinnerView.startAnimating()
+            self.view.addSubview(blurView)
+            if(Helper.sharedInstance.localAmblum.count == 0){
+                queue.addOperationWithBlock({
+                    Helper.sharedInstance.getIpodLibraryInformation()
+                    NSOperationQueue.mainQueue().addOperationWithBlock({
+                        self.localVideoDic = Helper.sharedInstance.localAmblum
+                        self.videoImageDic = Helper.sharedInstance.localImageDic
+                        self.mainTableView.reloadData()
+                        self.spinnerView.stopAnimating()
+                        self.blurView.removeFromSuperview()
+                         (self.tabBarController?.viewControllers![1] as! SecondViewController).getData()
+                        (self.tabBarController?.viewControllers![2] as! ThirdViewController).getData()
+                        (self.tabBarController?.viewControllers![3] as! FourthViewController).getData()
+                    })
+                })
+            }
+        }
         
         searchController.searchResultsUpdater = self
         searchController.searchBar.sizeToFit()
@@ -133,7 +163,7 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
             cell.textLabel?.text = title
             
             if((videoImageDic[title]) != nil){
-                cell.imageView?.image = videoImageDic[title]
+                cell.imageView?.image = videoImageDic[title] as? UIImage
             }
             return cell
 
@@ -145,7 +175,7 @@ class FirstViewController: UIViewController, UITableViewDelegate,UITableViewData
             cell.textLabel?.text = title
             
             if((videoImageDic[title]) != nil){
-                cell.imageView?.image = videoImageDic[title]
+                cell.imageView?.image = videoImageDic[title] as? UIImage
             }
             return cell
         }else{
