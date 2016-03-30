@@ -12,7 +12,7 @@ class SecondViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var playistTableView: UITableView!
-    let alert:UIAlertController = UIAlertController.init(title: "New Playist", message: "Add a New Playist", preferredStyle: UIAlertControllerStyle.Alert)
+    let alert:UIAlertController = UIAlertController.init(title: "New Playlist", message: "Add a New Playlist", preferredStyle: UIAlertControllerStyle.Alert)
     
     var playistAmblum:[String:OrderedDictionary] = Helper.sharedInstance.playistAmblum
     var sectionTitle:String = ""

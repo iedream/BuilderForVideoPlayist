@@ -8,7 +8,7 @@
         <!--Add-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="FirstViewController" customModule="VideoPlayistBuilder" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9pv-A4-QxB" customClass="FirstViewController" customModule="VideoManager" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ia1-K6-d13"/>
                         <viewControllerLayoutGuide type="bottom" id="4ug-Mw-9AY"/>
@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IpodLibraryCell" id="3lt-sr-Nq7" customClass="IpodLibraryCell" customModule="VideoPlayistBuilder" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IpodLibraryCell" id="3lt-sr-Nq7" customClass="IpodLibraryCell" customModule="VideoManager" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3lt-sr-Nq7" id="O3s-as-bvH">
@@ -52,7 +52,7 @@
         <!--Playist-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController id="8rJ-Kc-sve" customClass="SecondViewController" customModule="VideoPlayistBuilder" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="8rJ-Kc-sve" customClass="SecondViewController" customModule="VideoManager" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
                         <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
@@ -72,7 +72,7 @@
                                 <rect key="frame" x="0.0" y="49" width="600" height="502"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playistTableCell" id="hwI-GD-nFi" customClass="viewControllerCell" customModule="VideoPlayistBuilder" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playistTableCell" id="hwI-GD-nFi" customClass="viewControllerCell" customModule="VideoManager" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hwI-GD-nFi" id="9tA-H7-H9u">
@@ -115,7 +115,7 @@
         <!--Singer-->
         <scene sceneID="eW9-80-z29">
             <objects>
-                <viewController id="ERf-K3-0X5" customClass="ThirdViewController" customModule="VideoPlayistBuilder" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ERf-K3-0X5" customClass="ThirdViewController" customModule="VideoManager" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="g3l-2M-7kf"/>
                         <viewControllerLayoutGuide type="bottom" id="hhA-Na-mSO"/>
@@ -128,7 +128,7 @@
                                 <rect key="frame" x="0.0" y="66" width="600" height="485"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="singerTableCell" id="qk8-An-Lxn" customClass="viewControllerCell" customModule="VideoPlayistBuilder" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="singerTableCell" id="qk8-An-Lxn" customClass="viewControllerCell" customModule="VideoManager" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qk8-An-Lxn" id="QGq-IA-pez">
@@ -179,7 +179,7 @@
         <!--All-->
         <scene sceneID="tPJ-zw-krX">
             <objects>
-                <viewController id="cRU-S7-l1C" customClass="FourthViewController" customModule="VideoPlayistBuilder" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="cRU-S7-l1C" customClass="FourthViewController" customModule="VideoManager" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0Hg-We-2Zf"/>
                         <viewControllerLayoutGuide type="bottom" id="Z7p-Z6-8Hg"/>
@@ -192,7 +192,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="allTableCell" id="eHE-tG-gkt" customClass="viewControllerCell" customModule="VideoPlayistBuilder" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="allTableCell" id="eHE-tG-gkt" customClass="viewControllerCell" customModule="VideoManager" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eHE-tG-gkt" id="L02-oT-CeV">
@@ -223,7 +223,7 @@
         <!--Custom Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController id="49e-Tb-3d3" customClass="CustomTabBarController" customModule="VideoPlayistBuilder" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="49e-Tb-3d3" customClass="CustomTabBarController" customModule="VideoManager" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>

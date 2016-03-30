@@ -127,41 +127,17 @@ class Helper{
     func getIpodLibraryImages() {
         for(name,path) in allAmblum.interate(){
             if(localImageDic[name] == nil){
-                self.captureFrame(NSURL(string: path)!, timeInSeconds: 12, key: name)
+                let namePredicate = MPMediaPropertyPredicate(value: name, forProperty: MPMediaItemPropertyTitle)
+                mainQuery.addFilterPredicate(namePredicate)
+                if (mainQuery.items?.count < 1){
+                    removeVideo("All", folderName: "", fileName: name)
+                }else {
+                    self.captureFrame(NSURL(string: path)!, timeInSeconds: 12, key: name)
+                }
+                mainQuery.removeFilterPredicate(namePredicate)
             }
         }
     }
-    
-//    func getVideoImage(type:String) -> NSDictionary{
-//        var imageDic:NSDictionary = NSDictionary()
-//        if (type == "Playist"){
-//            for(_,subDic) in playistAmblum{
-//                for(name,path) in subDic.interate(){
-//                    if(localImageDic[name] == nil){
-//                        self.captureFrame(NSURL(string: path)!, timeInSeconds: 12, key: name)
-//                    }
-//                    imageDic[name] = localImageDic[name]
-//                }
-//            }
-//        }else if( type == "Singer"){
-//            for(_,subDic) in singerAmblum{
-//                for(name,path) in subDic.interate(){
-//                    if(localImageDic[name] == nil){
-//                        self.captureFrame(NSURL(string: path)!, timeInSeconds: 12, key: name)
-//                    }
-//                    imageDic[name] = localImageDic[name]
-//                }
-//            }
-//        }else if( type == "All"){
-//            for(name,path) in allAmblum.interate(){
-//                if(localImageDic[name] == nil){
-//                    self.captureFrame(NSURL(string: path)!, timeInSeconds: 12, key: name)
-//                }
-//                imageDic[name] = localImageDic[name]
-//            }
-//        }
-//        return imageDic
-//    }
 
     // MARK: - Get Individual Mp4 Image To Disply -
     
