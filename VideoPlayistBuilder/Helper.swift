@@ -119,12 +119,13 @@ class Helper{
             localAmblum[name] = path.absoluteString
             // Setting up to get image from mp4
             if(localImageDic[name] == nil){
-                self.captureFrame(path, timeInSeconds: 12, key:name)
+                self.captureFrameSaveImage(path, name: name)
             }
         }
     }
     
     func getIpodLibraryImages() {
+        mainQuery.addFilterPredicate(typePredicate)
         for(name,path) in allAmblum.interate(){
             if(localImageDic[name] == nil){
                 let namePredicate = MPMediaPropertyPredicate(value: name, forProperty: MPMediaItemPropertyTitle)
@@ -132,7 +133,7 @@ class Helper{
                 if (mainQuery.items?.count < 1){
                     removeVideo("All", folderName: "", fileName: name)
                 }else {
-                    self.captureFrame(NSURL(string: path)!, timeInSeconds: 12, key: name)
+                    self.captureFrameSaveImage(path, name: name)
                 }
                 mainQuery.removeFilterPredicate(namePredicate)
             }
@@ -141,16 +142,27 @@ class Helper{
 
     // MARK: - Get Individual Mp4 Image To Disply -
     
-    // Acutally getting the image
-    func captureFrame(url:NSURL, timeInSeconds time:Int64, key:String) {
-        let generator = AVAssetImageGenerator(asset: AVAsset(URL: url))
-        let tVal = NSValue(CMTime: CMTimeMake(time, 1))
-        generator.generateCGImagesAsynchronouslyForTimes([tVal], completionHandler: {(_, im:CGImage?, _, _, e:NSError?) in self.finshedCapture(im, key:key, error:e)})
-    }
-    
-    // Save image in dictionary
-    func finshedCapture(im:CGImage?, key:String, error:NSError?)  {
-        localImageDic[key] = UIImage(CGImage: im!)
+    // Acutally getting the image and saving the image to dictionary
+    func captureFrameSaveImage(path:NSObject, name:String) {
+        var url:NSURL;
+        if(path.isKindOfClass(NSURL)) {
+            url = path as! NSURL
+        }else {
+            url = NSURL(string: path as! String)!
+        }
+        let imageGenerator = AVAssetImageGenerator(asset: AVAsset(URL: url))
+        imageGenerator.appliesPreferredTrackTransform = true
+        imageGenerator.requestedTimeToleranceAfter = kCMTimeZero
+        imageGenerator.requestedTimeToleranceBefore = kCMTimeZero
+        let time:CMTime = CMTimeMake(20, 600)
+        
+        do{
+            let imageRef:CGImageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
+            let image:UIImage = UIImage.init(CGImage: imageRef)
+            localImageDic[name] = image
+        }catch{
+            
+        }
     }
 
      // MARK: - Local Source Access -
